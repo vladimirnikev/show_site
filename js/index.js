@@ -118,21 +118,3 @@ imgHovered.forEach(element => {
         }
     })
 })
-
-// ---- Work List Hover and OnClick ----
-let imgInButton = document.querySelectorAll('.work-list__img');
-let workListButton = document.querySelectorAll('.work-list__img-wrapper');
-
-let categoryImg = document.querySelector('.category__img');
-let categoryTitle = document.querySelector('.category__title');
-
-
-workListButton.forEach(element => {
-    element.addEventListener('mouseover', () => {
-        if (element.index === imgInButton.forEach(e => {
-                return e.index;
-            })) {
-            // Можно через CSS бекграунд, или использовать спрайт
-        }
-    })
-})
