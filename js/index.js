@@ -9,7 +9,6 @@ let mouseCursor = document.querySelector('.cursor');
 let logo = document.querySelectorAll('.logo');
 let navLink = document.querySelectorAll('.nav__link');
 let nav = document.querySelectorAll('.nav__menu');
-let headBlock = document.querySelectorAll('.head__block');
 
 
 window.addEventListener('mousemove', cursor);
@@ -31,6 +30,7 @@ logo.forEach(element => {
         mouseCursor.classList.remove('cursor_white');
     })
 });
+
 
 navLink.forEach(element => {
     element.addEventListener('mouseover', () => {
@@ -79,12 +79,12 @@ setInterval(() => {
 window.addEventListener('scroll', () => {
     let topScroll = window.pageYOffset;
     let section = document.querySelector('.section');
-    let darkBg = document.querySelectorAll('.dark-bg');
+    // let darkBg = document.querySelectorAll('.dark-bg');
     let workList = document.querySelector('.work-list');
 
     if (topScroll < 410) {
         parallax(topScroll, section, 0);
-        darkBackground(topScroll, darkBg[0], 400);
+        // darkBackground(topScroll, darkBg[0], 400);
     } else if (topScroll > 410) {
         parallax(topScroll, workList, 750);
     }
@@ -94,16 +94,18 @@ function parallax(topScroll, section, index) {
     section.style.marginTop = `${-topScroll+index}px`;
 }
 
-function darkBackground(topScroll, darkBg, speed) {
-    darkBg.style.opacity = `${topScroll/speed}`;
-    darkBg.style.zIndex = `20`;
-}
+// function darkBackground(topScroll, darkBg, speed) {
+//     darkBg.style.opacity = `${topScroll/speed}`;
+//     // darkBg.style.zIndex = `20`;
+// }
 
 // ---- Section Hover ----
+
 let imgHovered = document.querySelectorAll('.clients-img__wrapper');
 
 imgHovered.forEach(element => {
     element.addEventListener('mouseover', () => {
+        mouseCursor.classList.add('cursor_white');
         element.insertAdjacentHTML('afterbegin', '<p class="clients-hover__title">Channel Operation and management</p>');
         element.insertAdjacentHTML('afterbegin', '<p class="clients-hover__text">8.2M +</p>');
         element.insertAdjacentHTML('afterbegin', '<img src="img/clients-list_hover.png" class="clients-hover__img">')
@@ -113,8 +115,28 @@ imgHovered.forEach(element => {
 
 imgHovered.forEach(element => {
     element.addEventListener('mouseleave', () => {
+        mouseCursor.classList.remove('cursor_white');
         while (element.children.length > 1) {
             element.removeChild(element.firstChild);
         }
+    })
+})
+
+// ---- Work List Hover and OnClick ----
+let workListButton = document.querySelectorAll('.work-list__img-wrapper');
+
+let categoryImg = document.querySelector('.category__img');
+let categoryTitle = document.querySelector('.category__title');
+
+
+workListButton.forEach(element => {
+    element.addEventListener('mouseover', () => {
+        mouseCursor.classList.add('cursor_white');
+    })
+})
+
+workListButton.forEach(element => {
+    element.addEventListener('mouseleave', () => {
+        mouseCursor.classList.remove('cursor_white');
     })
 })
