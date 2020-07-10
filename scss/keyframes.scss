@@ -1,0 +1,163 @@
+@keyframes headphone {
+
+    0%,
+    50%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(30px, -30px);
+    }
+
+    75% {
+        transform: translate(-30px, 30px);
+    }
+}
+
+@keyframes big-light {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-15px, -15px);
+    }
+
+    50% {
+        transform: translate(0, -30px);
+    }
+
+    75% {
+        transform: translate(15px, -15px);
+    }
+}
+
+@keyframes small-torus {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    40% {
+        transform: translate(-10px, -50px);
+    }
+
+    80% {
+        transform: translate(10px, 25px);
+    }
+}
+
+@keyframes youtube {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-50px, 30px);
+    }
+
+    60% {
+        transform: translate(50px, -30px);
+    }
+
+    70% {
+        transform: translate(50px, -50px);
+    }
+}
+
+@keyframes camera {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -40px);
+    }
+
+    75% {
+        transform: translate(20px, -15px);
+    }
+}
+
+@keyframes heart {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(10px, -20px);
+    }
+
+    60% {
+        transform: translate(-10px, 20px);
+        animation-timing-function: ease-out;
+    }
+
+    80% {
+        transform: translate(30px, -50px);
+        animation-timing-function: ease-out;
+    }
+}
+
+@keyframes note {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    30% {
+        transform: translate(10px, 15px);
+    }
+
+    70% {
+        transform: translate(10px, -15px);
+    }
+}
+
+@keyframes claqueta {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    30% {
+        transform: translate(20px, 15px);
+        animation-timing-function: ease-out;
+    }
+
+    60% {
+        transform: translate(35px, 5px);
+        animation-timing-function: ease-in-out
+    }
+}
+
+@keyframes torus {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+        animation-timing-function: ease;
+    }
+
+    40% {
+        transform: translate(30px, -15px);
+        animation-timing-function: ease;
+    }
+
+    70% {
+        transform: translate(30px, 5px);
+        animation-timing-function: ease;
+    }
+}
