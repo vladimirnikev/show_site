@@ -161,3 +161,33 @@
         animation-timing-function: ease;
     }
 }
+
+@keyframes light-tl {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-150px, -50px);
+    }
+}
+
+@keyframes light-tr {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(70px, -40px);
+    }
+}
+
+@keyframes light-bl {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-120px, 120px);
+    }
+}
