@@ -110,3 +110,33 @@
     transform: translate(0, 0); }
   100% {
     transform: translate(-120px, 120px); } }
+
+@keyframes light-tr-767 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(140px, -40px); } }
+
+@keyframes light-bl-767 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(-120px, 70px); } }
+
+@keyframes light-tl-492 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(-40px, -30px); } }
+
+@keyframes light-tr-492 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(80px, -40px); } }
+
+@keyframes light-bl-492 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(-60px, 45px); } }

@@ -15,10 +15,10 @@ gulp.task('sass:watch', function () {
 });
 
 gulp.task('auto', function () {
-    gulp.src('css/style.css')
+    return gulp.src('css/style.css')
         .pipe(autoprefixer({
             // browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(gulp.dest('./css'))
+        .pipe(gulp.dest('css/'));
 });

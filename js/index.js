@@ -1,6 +1,7 @@
-// ---- Preloader ----
 document.body.style.overflow = 'hidden';
+let ua = detect.parse(navigator.userAgent);
 
+// ---- Preloader ----
 let animatePreloaderImage = setInterval(function () {
 
     let loadingString = document.querySelector('.preloader__text');
@@ -25,18 +26,78 @@ let countPercentInPreloader = setInterval(function () {
         clearInterval(countPercentInPreloader);
     }
 }, 30)
-// Уйзнай за шрифт
+
 
 window.onload = function () {
-    let preloader = document.querySelector('.preloader');
+    let navigation = document.querySelectorAll('.head__block');
 
     setTimeout(function () {
+        let preloader = document.querySelector('.preloader');
         preloader.classList.add('done');
         document.body.style.overflow = '';
         clearInterval(animatePreloaderImage);
     }, 1000)
-}
 
+    if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+        mouseCursor.style.transitionProperty = 'none';
+        mouseCursor.style.WebkitFontSmoothing = 'subpixel-antialiased';
+        navigation[1].style.position = 'static';
+        document.querySelector('.section__text_wrapper').style.position = 'static';
+        document.querySelectorAll('.section__img').forEach(element => {
+            element.style.position = 'absolute';
+        })
+    }
+
+    // ---- Parallax Scroll ----
+    window.addEventListener('scroll', () => {
+        let topScroll = window.pageYOffset;
+        let darkBg = document.querySelectorAll('.dark-bg');
+        let sectionCoordinates = darkBg[1].parentNode.getBoundingClientRect();
+        let workListCoordinates = darkBg[2].parentNode.getBoundingClientRect();
+        let teamCoordinates = document.querySelector('.team').getBoundingClientRect();
+
+        if (document.documentElement.clientHeight > 1024) {
+            darkBg[0].parentNode.style.position = 'relative';
+            darkBg[1].parentNode.style.position = 'relative';
+            darkBg[2].parentNode.style.position = 'relative';
+            navigation[1].style.position = 'static';
+        } else {
+            if (topScroll > 200) {
+                darkBg[0].style.opacity = `${(topScroll-200)/60*0.1}`;
+                darkBg[0].style.zIndex = '20';
+            } else {
+                darkBg[0].style.zIndex = '';
+            }
+
+            if (workListCoordinates.y <= document.documentElement.clientHeight) {
+                darkBg[1].parentNode.style.position = 'sticky';
+                darkBg[1].parentNode.style.position = '-webkit-sticky';
+                darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
+                // darkBg[1].style.opacity = `${(topScroll-1177)/78*0.1}`;
+                // console.log(workListCoordinates.y);
+                darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
+                darkBg[1].style.zIndex = '31';
+            } else {
+                darkBg[1].style.zIndex = '';
+            }
+
+            // if (topScroll > 2100) {
+            //     darkBg[2].style.opacity = `${(topScroll-2100)/68*0.1}`;
+            //     darkBg[2].style.zIndex = '2';
+            // } else {
+            //     darkBg[2].style.zIndex = '-1';
+            // }
+
+            // if (document.documentElement.clientHeight > 600) {
+            //     darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
+            //     if (teamCoordinates.y <= workListCoordinates.height) {
+            //         darkBg[2].style.opacity = `${(teamCoordinates.y - document.documentElement.clientHeight)/-1000}`;
+            //     }
+            // }
+        }
+    })
+
+}
 
 // ---- Parallax Title ----
 VanillaTilt.init(document.querySelector('.title__wrapper'), {
@@ -44,12 +105,11 @@ VanillaTilt.init(document.querySelector('.title__wrapper'), {
     speed: 4000,
 });
 
-// ---- Mouse Cursor ----
+// Mouse
 let mouseCursor = document.querySelector('.cursor');
 let logo = document.querySelectorAll('.logo');
 let navLink = document.querySelectorAll('.nav__link');
 let nav = document.querySelectorAll('.nav__menu');
-
 
 window.addEventListener('mousemove', cursor);
 
@@ -60,10 +120,18 @@ function cursor(e) {
 
 function cursorHover(element) {
     element.addEventListener('mouseover', () => {
-        mouseCursor.classList.add('cursor_white');
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.add('cursor_white_safari');
+        } else {
+            mouseCursor.classList.add('cursor_white');
+        }
     })
     element.addEventListener('mouseleave', () => {
-        mouseCursor.classList.remove('cursor_white');
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.remove('cursor_white_safari');
+        } else {
+            mouseCursor.classList.remove('cursor_white');
+        }
     })
 }
 
@@ -71,35 +139,65 @@ logo.forEach(element => {
     cursorHover(element);
 });
 
-
 navLink.forEach(element => {
     element.addEventListener('mouseover', () => {
-        mouseCursor.classList.add('cursor_nav');
+
         mouseCursor.insertAdjacentHTML('afterbegin', '<p id="cursor_text" class="cursor_text">Contact</p>');
+
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.add('cursor_nav_safari');
+            document.querySelector('.cursor_text').style.transform = 'scale(3)';
+        } else {
+            mouseCursor.classList.add('cursor_nav');
+        }
     })
 
     element.addEventListener('mouseleave', () => {
-        mouseCursor.classList.remove('cursor_nav');
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.remove('cursor_nav_safari');
+        } else {
+            mouseCursor.classList.remove('cursor_nav');
+        }
         mouseCursor.firstChild.remove();
     })
 });
 
 nav.forEach(element => {
     element.addEventListener('mouseover', () => {
-        mouseCursor.classList.add('cursor_nav');
+
         if (mouseCursor.hasChildNodes()) {
             mouseCursor.firstChild.remove();
             mouseCursor.insertAdjacentHTML('afterbegin', '<p id="cursor_text" class="cursor_text">Open</p>');
         } else {
             mouseCursor.insertAdjacentHTML('afterbegin', '<p id="cursor_text" class="cursor_text">Open</p>');
         }
+
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.add('cursor_nav_safari');
+            document.querySelector('.cursor_text').style.transform = 'scale(3)';
+        } else {
+            mouseCursor.classList.add('cursor_nav');
+        }
+
+
     })
 
     element.addEventListener('mouseleave', () => {
-        mouseCursor.classList.remove('cursor_nav');
+        if (ua.browser.family === 'Safari' || ua.browser.family === 'Safari Family') {
+            mouseCursor.classList.remove('cursor_nav_safari');
+        } else {
+            mouseCursor.classList.remove('cursor_nav');
+        }
         mouseCursor.firstChild.remove();
     })
 });
+// }
+
+
+
+
+
+
 
 // ---- Counter -----
 let counter = document.querySelector('.main__counter');
@@ -111,53 +209,14 @@ setInterval(() => {
 }, 90);
 
 
-// ---- Parallax Scroll ----
-window.addEventListener('scroll', () => {
-    let topScroll = window.pageYOffset;
-    let darkBg = document.querySelectorAll('.dark-bg');
 
-    if (topScroll > 200) {
-        darkBg[0].style.opacity = `${(topScroll-200)/60*0.1}`;
-        darkBg[0].style.zIndex = '20';
-    } else {
-        darkBg[0].style.zIndex = '';
-    }
-
-    if (topScroll > 1177) {
-        darkBg[1].parentNode.style.position = 'sticky';
-        darkBg[1].parentNode.style.top = '-370px';
-        darkBg[1].style.opacity = `${(topScroll-1177)/78*0.1}`;
-        darkBg[1].style.zIndex = '31';
-    } else {
-        darkBg[1].style.zIndex = '';
-    }
-
-    if (topScroll > 2100) {
-        darkBg[2].style.opacity = `${(topScroll-2100)/68*0.1}`;
-        darkBg[2].style.zIndex = '2';
-    } else {
-        darkBg[2].style.zIndex = '-1';
-    }
-})
 
 // ---- Section Clients Hover ----
 
 let imgHovered = document.querySelectorAll('.clients-img__wrapper');
 
 imgHovered.forEach(element => {
-    element.addEventListener('mouseover', () => {
-        cursorHover(element);
-        element.insertAdjacentHTML('afterbegin', '<p class="clients-hover__title">Channel Operation and management</p>');
-        element.insertAdjacentHTML('afterbegin', '<p class="clients-hover__text">8.2M +</p>');
-        element.insertAdjacentHTML('afterbegin', '<img src="img/section/clients-list_hover.png" class="clients-hover__img">')
-        element.insertAdjacentHTML('afterbegin', '<a class="clients-hover__link">Video Link <i class="fas fa-arrow-up"></i></a>')
-    })
-
-    element.addEventListener('mouseleave', () => {
-        while (element.children.length > 1) {
-            element.removeChild(element.firstChild);
-        }
-    })
+    cursorHover(element);
 })
 
 // ---- Work List Hover and OnClick ----
@@ -165,20 +224,6 @@ let workListButton = document.querySelectorAll('.work-list__img-wrapper');
 let workListButtons = document.querySelector('.work-list__buttons');
 let categoryImg = document.querySelector('.category__img');
 let categoryTitle = document.querySelector('.category__title');
-
-
-// let lightsWrapper = document.querySelector('.work-list__category');
-// let lights = document.querySelectorAll('.work-list__light');
-// lightsWrapper.addEventListener('mousemove', function (e) {
-//     let width = screen.width;
-//     let height = screen.height;
-//     let x = e.pageX / width;
-//     let y = e.pageY / height;
-
-//     lights.forEach(element => {
-//         element.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
-//     })
-// })
 
 function moveLight() {
     let lightsWrapper = document.querySelector('.work-list__category');
@@ -211,86 +256,139 @@ workListButtons.onclick = function (e) {
     if (e.target.id === 'wl1') {
         categoryImg.src = 'img/work-list/work-list_gear-big.png';
         categoryTitle.innerHTML = 'Channel Operation and Management';
-        categoryTitle.style.maxWidth = '362px';
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '253px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '362px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
 
     } else if (e.target.id === 'wl2') {
         categoryImg.src = 'img/work-list/work-list_star-big.png';
         categoryTitle.innerHTML = 'Creative Services for Infuencers';
-        categoryTitle.style.maxWidth = '362px';
-
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '253px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '362px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
 
     } else if (e.target.id === 'wl3') {
         categoryImg.src = 'img/work-list/work-list_graphic-big.png';
         categoryTitle.innerHTML = 'Graphic Design & Photography'
-        categoryTitle.style.maxWidth = '362px';
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '253px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '362px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
 
     } else if (e.target.id === 'wl4') {
         categoryImg.src = 'img/work-list/work-list_hlopushka-big.png';
         categoryTitle.innerHTML = 'Lyric Videos & Animation';
-        categoryTitle.style.maxWidth = '362px';
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '253px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '362px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
 
     } else if (e.target.id === 'wl5') {
         categoryImg.src = 'img/work-list/work-list_lupa-big.png';
         categoryTitle.innerHTML = 'Business Development';
-        categoryTitle.style.maxWidth = '362px';
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '253px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '362px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
 
     } else if (e.target.id === 'wl6') {
         categoryImg.src = 'img/work-list/work-list_headphone-big.png';
         categoryTitle.innerHTML = 'Brand Campaigns';
-        categoryTitle.style.maxWidth = "308px";
 
         workListButton.forEach(element => {
             element.firstElementChild.classList.remove('button_red');
             element.style.backgroundPosition = '0 0';
         })
 
+        if (document.documentElement.clientWidth < 1050) {
+            categoryTitle.style.maxWidth = '196px';
+            e.target.style.backgroundPosition = '0 -130px';
+            if (document.documentElement.clientWidth < 768) {
+                e.target.style.backgroundPosition = '0 -70px';
+            }
+        } else {
+            categoryTitle.style.maxWidth = '308px';
+            e.target.style.backgroundPosition = '0 -173px';
+        }
+
         e.target.firstElementChild.classList.add('button_red');
-        e.target.style.backgroundPosition = '0 -173px';
         moveLight();
     }
 }
@@ -298,7 +396,15 @@ workListButtons.onclick = function (e) {
 workListButton.forEach(element => {
     cursorHover(element);
     element.addEventListener('mouseover', () => {
-        element.style.backgroundPosition = '0 -173px';
+        if (document.documentElement.clientWidth < 1050) {
+            if (document.documentElement.clientWidth < 768) {
+                element.style.backgroundPosition = '0 -70px';
+            } else {
+                element.style.backgroundPosition = '0 -130px';
+            }
+        } else {
+            element.style.backgroundPosition = '0 -173px';
+        }
     })
 
     element.addEventListener('mouseleave', () => {
@@ -315,17 +421,11 @@ function carousel() {
     const btnPrev = document.querySelector('.btn_prev');
     const btnNext = document.querySelector('.btn_next');
 
-    // Как динамично добавить order?
-    // items.forEach(element => {
-    // element.style.order = items.indexOf(element) + 1;
-    // console.log(items.indexOf(element));
-    // })
-
     btnPrev.onclick = function () {
         items.forEach(element => {
             if (element.style.order < items.length) {
                 element.style.order = element.style.order * 1 + 1;
-            } else if (element.style.order === '5') {
+            } else if (element.style.order === '4') {
                 element.style.order = 1;
             }
         })
@@ -336,7 +436,7 @@ function carousel() {
             if (element.style.order > 1) {
                 element.style.order -= 1;
             } else if (element.style.order === '1') {
-                element.style.order = 5;
+                element.style.order = 4;
             }
         })
     }

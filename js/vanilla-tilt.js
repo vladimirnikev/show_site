@@ -222,6 +222,13 @@ var VanillaTilt = (function () {
           `rotateX(0deg) ` +
           `rotateY(0deg) ` +
           `scale3d(1, 1, 1)`;
+
+        // Webkit
+
+        this.element.style.WebkitTransform = `perspective(${this.settings.perspective}px) ` +
+          `rotateX(0deg) ` +
+          `rotateY(0deg) ` +
+          `scale3d(1, 1, 1)`;
       }
 
       this.resetGlare();
@@ -230,6 +237,10 @@ var VanillaTilt = (function () {
     resetGlare() {
       if (this.glare) {
         this.glareElement.style.transform = "rotate(180deg) translate(-50%, -50%)";
+
+        // Webkit
+        this.glareElement.style.WebkitTransform = "rotate(180deg) translate(-50%, -50%)";
+
         this.glareElement.style.opacity = "0";
       }
     }
@@ -305,8 +316,19 @@ var VanillaTilt = (function () {
         "rotateY(" + (this.settings.axis === "y" ? 0 : values.tiltX) + "deg) " +
         "scale3d(" + this.settings.scale + ", " + this.settings.scale + ", " + this.settings.scale + ")";
 
+      // Webkit
+
+      this.element.style.WebkitTransform = "perspective(" + this.settings.perspective + "px) " +
+        "rotateX(" + (this.settings.axis === "x" ? 0 : values.tiltY) + "deg) " +
+        "rotateY(" + (this.settings.axis === "y" ? 0 : values.tiltX) + "deg) " +
+        "scale3d(" + this.settings.scale + ", " + this.settings.scale + ", " + this.settings.scale + ")";
+
       if (this.glare) {
         this.glareElement.style.transform = `rotate(${values.angle}deg) translate(-50%, -50%)`;
+
+        // Webkit
+        this.glareElement.style.WebkitTransform = `rotate(${values.angle}deg) translate(-50%, -50%)`;
+
         this.glareElement.style.opacity = `${values.percentageY * this.settings["max-glare"] / 100}`;
       }
 
@@ -362,6 +384,10 @@ var VanillaTilt = (function () {
         "height": `${this.element.offsetWidth * 2}px`,
         "transform": "rotate(180deg) translate(-50%, -50%)",
         "transform-origin": "0% 0%",
+        // Webkit
+        "-webkit-transform": "rotate(180deg) translate(-50%, -50%)",
+        "-webkit-transform-origin": "0% 0%",
+
         "opacity": "0",
       });
     }
