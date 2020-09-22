@@ -63,7 +63,7 @@ window.onload = function () {
             navigation[1].style.position = 'static';
         } else {
             if (topScroll > 200) {
-                darkBg[0].style.opacity = `${(topScroll-200)/60*0.1}`;
+                // darkBg[0].style.opacity = `${(topScroll-200)/60*0.1}`;
                 darkBg[0].style.zIndex = '20';
             } else {
                 darkBg[0].style.zIndex = '';
@@ -75,7 +75,7 @@ window.onload = function () {
                 darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
                 // darkBg[1].style.opacity = `${(topScroll-1177)/78*0.1}`;
                 // console.log(workListCoordinates.y);
-                darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
+                // darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
                 darkBg[1].style.zIndex = '31';
             } else {
                 darkBg[1].style.zIndex = '';
