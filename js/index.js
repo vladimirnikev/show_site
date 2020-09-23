@@ -50,51 +50,49 @@ window.onload = function () {
 
     // ---- Parallax Scroll ----
     window.addEventListener('scroll', () => {
-        let topScroll = window.pageYOffset;
+        // let topScroll = window.pageYOffset;
         let darkBg = document.querySelectorAll('.dark-bg');
         let sectionCoordinates = darkBg[1].parentNode.getBoundingClientRect();
         let workListCoordinates = darkBg[2].parentNode.getBoundingClientRect();
         let teamCoordinates = document.querySelector('.team').getBoundingClientRect();
+        let clientHeight = document.documentElement.clientHeight;
 
         if (document.documentElement.clientHeight > 1024) {
             darkBg[0].parentNode.style.position = 'relative';
             darkBg[1].parentNode.style.position = 'relative';
             darkBg[2].parentNode.style.position = 'relative';
             navigation[1].style.position = 'static';
-        } else {
-            if (topScroll > 200) {
-                // darkBg[0].style.opacity = `${(topScroll-200)/60*0.1}`;
-                darkBg[0].style.zIndex = '20';
-            } else {
-                darkBg[0].style.zIndex = '';
-            }
-
-            if (workListCoordinates.y <= document.documentElement.clientHeight) {
-                darkBg[1].parentNode.style.position = 'sticky';
-                darkBg[1].parentNode.style.position = '-webkit-sticky';
-                darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
-                // darkBg[1].style.opacity = `${(topScroll-1177)/78*0.1}`;
-                // console.log(workListCoordinates.y);
-                // darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
-                darkBg[1].style.zIndex = '31';
-            } else {
-                darkBg[1].style.zIndex = '';
-            }
-
-            // if (topScroll > 2100) {
-            //     darkBg[2].style.opacity = `${(topScroll-2100)/68*0.1}`;
-            //     darkBg[2].style.zIndex = '2';
-            // } else {
-            //     darkBg[2].style.zIndex = '-1';
-            // }
-
-            // if (document.documentElement.clientHeight > 600) {
-            //     darkBg[1].style.opacity = `${(workListCoordinates.y - document.documentElement.clientHeight)/-1000}`;
-            //     if (teamCoordinates.y <= workListCoordinates.height) {
-            //         darkBg[2].style.opacity = `${(teamCoordinates.y - document.documentElement.clientHeight)/-1000}`;
-            //     }
-            // }
         }
+
+        if (sectionCoordinates.y <= clientHeight) {
+            darkBg[0].style.opacity = -(((sectionCoordinates.y * 100 / clientHeight) - 100) / 100);
+            darkBg[0].style.zIndex = '20';
+        }
+
+        if (workListCoordinates.y <= clientHeight) {
+            darkBg[1].parentNode.style.position = 'sticky';
+            darkBg[1].parentNode.style.position = '-webkit-sticky';
+            darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
+            darkBg[1].style.opacity = -(((workListCoordinates.y * 100 / clientHeight) - 100) / 100);
+            darkBg[1].style.zIndex = '31';
+        } else {
+            darkBg[1].style.zIndex = '';
+        }
+
+        if (teamCoordinates.y <= clientHeight) {
+            darkBg[2].style.opacity = -(((teamCoordinates.y * 100 / clientHeight) - 100) / 100);
+        }
+
+        // if (topScroll > 200) {
+        //     darkBg[0].style.zIndex = '20';
+        // } else {
+        //     darkBg[0].style.zIndex = '';
+        // }
+        // if (topScroll > 2100) {
+        //     darkBg[2].style.zIndex = '2';
+        // } else {
+        //     darkBg[2].style.zIndex = '-1';
+        // }
     })
 
 }
@@ -207,8 +205,6 @@ setInterval(() => {
     counterUp = (counterUp * 1) + 11;
     counter.innerHTML = counterUp.toString().charAt(0) + '.' + counterUp.toString().substring(1, 4) + '.' + counterUp.toString().substring(4, 7) + '.' + counterUp.toString().substring(7);
 }, 90);
-
-
 
 
 // ---- Section Clients Hover ----
