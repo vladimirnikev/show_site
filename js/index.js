@@ -72,11 +72,17 @@ window.onload = function () {
         if (workListCoordinates.y <= clientHeight) {
             darkBg[1].parentNode.style.position = 'sticky';
             darkBg[1].parentNode.style.position = '-webkit-sticky';
-            darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
+            // 
+            if (document.documentElement.clientHeight < 1024) {
+                darkBg[1].parentNode.style.top = `${sectionCoordinates.y}px`;
+            }
+            // 
             darkBg[1].style.opacity = -(((workListCoordinates.y * 100 / clientHeight) - 100) / 100);
             darkBg[1].style.zIndex = '31';
         } else {
             darkBg[1].style.zIndex = '';
+            darkBg[1].parentNode.style.top = `0`;
+            darkBg[1].parentNode.style.position = 'relative';
         }
 
         if (teamCoordinates.y <= clientHeight) {
